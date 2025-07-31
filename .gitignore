@@ -230,3 +230,5 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,visualstudiocode,python
 
 output/
+bezier_curves_output_no_visualization/*
+chinese-calligraphy-dataset/*
