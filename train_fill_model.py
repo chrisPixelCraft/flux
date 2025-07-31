@@ -113,7 +113,8 @@ def load_model(model_name: str, device: str = "cuda") -> FluxBezierAdapter:
     print(f"  Input channels: {flux_config.params.in_channels}")
     print(f"  Fill model: {model.is_fill_model}")
     print(f"  Total parameters: {sum(p.numel() for p in model.parameters()):,}")
-    print(f"  BezierAdapter parameters: {sum(p.numel() for p in model.bezier_adapter.parameters() if hasattr(model, 'bezier_adapter') else []):,}")
+    bezier_params = sum(p.numel() for p in model.bezier_adapter.parameters()) if hasattr(model, 'bezier_adapter') else 0
+    print(f"  BezierAdapter parameters: {bezier_params:,}")
     
     return model.to(device)
 

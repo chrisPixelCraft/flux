@@ -1,0 +1,21 @@
+{
+  "experiment_name": "bezier_adapter_production",
+  "total_steps": 50000,
+  "model": {
+    "flux_model_name": "flux-dev-fill",
+    "is_fill_model": true,
+    "mixed_precision": true,
+    "use_gradient_checkpointing": true
+  },
+  "data": {
+    "batch_size": 2,
+    "image_size": 512
+  },
+  "optimization": {
+    "learning_rate": 0.0001,
+    "warmup_steps": 1000
+  },
+  "validate_every": 500,
+  "save_every": 2500,
+  "log_every": 50
+}

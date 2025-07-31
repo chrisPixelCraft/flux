@@ -1,0 +1,46 @@
+{
+  "character": "A",
+  "font_style": "sans-serif",
+  "image_path": "sample_dataset/fonts/sans-serif/A/rendered.png",
+  "style_image_path": "sample_dataset/fonts/sans-serif/A/style.png",
+  "mask_path": "sample_dataset/fonts/sans-serif/A/mask.png",
+  "bezier_curves": [
+    [
+      [
+        0.5,
+        0.1
+      ],
+      [
+        0.2,
+        0.9
+      ],
+      [
+        0.8,
+        0.9
+      ],
+      [
+        0.3,
+        0.5
+      ]
+    ],
+    [
+      [
+        0.3,
+        0.5
+      ],
+      [
+        0.7,
+        0.5
+      ],
+      [
+        0.65,
+        0.6
+      ],
+      [
+        0.35,
+        0.6
+      ]
+    ]
+  ],
+  "style_prompt": "sans-serif typography letter A, clean and elegant"
+}

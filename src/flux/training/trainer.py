@@ -22,7 +22,8 @@ from torch.utils.tensorboard import SummaryWriter
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 
-from ..modules.models import TrainingConfig, MultiModalCondition
+from ..modules.models import MultiModalCondition
+from .config import TrainingConfig
 from ..modules.bezier_flux_model import FluxBezierAdapter
 from ..modules.conditioner import HFEmbedder
 from .losses import MultiLossTrainer, LossOutputs

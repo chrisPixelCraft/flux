@@ -28,15 +28,10 @@ from diffusers.utils.torch_utils import randn_tensor
 from diffusers.pipelines.pipeline_utils import DiffusionPipeline
 from diffusers.pipelines.stable_diffusion.pipeline_output import StableDiffusionPipelineOutput
 
-# Add path for our custom modules
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from modules.autoencoder import AutoEncoder
-from modules.bezier_flux_model import FluxBezierAdapter
-from modules.models import MultiModalCondition, BezierControlPoints
-from util import load_image
+from ..modules.autoencoder import AutoEncoder
+from ..modules.bezier_flux_model import FluxBezierAdapter
+from ..modules.models import MultiModalCondition, BezierControlPoints
+from ..util import load_image
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 

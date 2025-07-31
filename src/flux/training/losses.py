@@ -13,7 +13,7 @@ from typing import Dict, Optional, Tuple, Any
 import numpy as np
 from dataclasses import dataclass
 
-from ..modules.models import TrainingConfig
+from .config import TrainingConfig
 
 
 @dataclass

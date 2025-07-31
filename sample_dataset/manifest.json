@@ -1,0 +1,14 @@
+{
+  "dataset_name": "Sample Font Dataset",
+  "version": "1.0",
+  "characters": [
+    "A"
+  ],
+  "font_styles": [
+    "serif",
+    "sans-serif",
+    "script"
+  ],
+  "total_samples": 3,
+  "format": "bezier_font_v1"
+}

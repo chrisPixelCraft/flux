@@ -1,0 +1,21 @@
+{
+  "experiment_name": "bezier_adapter_dev_test",
+  "total_steps": 100,
+  "model": {
+    "flux_model_name": "flux-dev-fill",
+    "is_fill_model": true,
+    "condition_adapter": {
+      "mask_input_channels": 320
+    }
+  },
+  "data": {
+    "batch_size": 1,
+    "image_size": 512
+  },
+  "optimization": {
+    "learning_rate": 0.0001
+  },
+  "validate_every": 25,
+  "save_every": 50,
+  "log_every": 10
+}

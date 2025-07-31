@@ -38,20 +38,6 @@ class MultiModalCondition(BaseModel):
     bezier_features: Optional[Tensor] = Field(None, description="Processed Bézier features (3,)")
 
 
-class TrainingConfig(BaseModel):
-    """BezierAdapter training configuration."""
-    learning_rate: float = Field(1e-4, gt=0.0)
-    batch_size: int = Field(4, gt=0, description="Memory-optimized batch size")
-    total_steps: int = Field(100000, gt=0)
-    warmup_steps: int = Field(1000, gt=0)
-    gradient_clipping: float = Field(1.0, gt=0.0)
-    mixed_precision: bool = Field(True, description="Use FP16 for memory efficiency")
-    trainable_params_only: bool = Field(True, description="Freeze FLUX backbone")
-    
-    # Multi-loss weights
-    diffusion_loss_weight: float = Field(1.0, gt=0.0)
-    density_loss_weight: float = Field(0.5, gt=0.0)
-    style_loss_weight: float = Field(0.3, gt=0.0)
 
 
 class BezierAdapterConfig(BaseModel):
