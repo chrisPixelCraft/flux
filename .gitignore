@@ -232,3 +232,4 @@ $RECYCLE.BIN/
 output/
 bezier_curves_output_no_visualization/*
 chinese-calligraphy-dataset/*
+checkpoints/*

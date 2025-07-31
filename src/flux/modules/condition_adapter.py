@@ -27,6 +27,9 @@ class ConditionInjectionAdapter(nn.Module):
     and fuses them via multi-head cross-attention. Each branch uses LoRA adapters for
     parameter efficiency while maintaining the frozen FLUX backbone.
     
+    Supports both standard FLUX (4 VAE channels) and FLUX.1-Fill-dev (320 channels)
+    models with automatic adaptation of the mask processing branch.
+    
     Args:
         clip_dim: CLIP feature dimension (default: 768)
         t5_dim: T5 text feature dimension (default: 4096)
@@ -35,6 +38,7 @@ class ConditionInjectionAdapter(nn.Module):
         num_heads: Number of attention heads for fusion (default: 8)
         dropout: Dropout rate for attention (default: 0.1)
         lora_scale: LoRA adaptation scale (default: 1.0)
+        mask_channels: Number of mask/conditioning channels (4 for FLUX, 320 for Fill)
     """
     
     def __init__(
@@ -45,7 +49,8 @@ class ConditionInjectionAdapter(nn.Module):
         lora_rank: int = 64,
         num_heads: int = 8,
         dropout: float = 0.1,
-        lora_scale: float = 1.0
+        lora_scale: float = 1.0,
+        mask_channels: int = 4  # VAE channels for standard FLUX, 320 for Fill models
     ):
         super().__init__()
         
@@ -54,6 +59,7 @@ class ConditionInjectionAdapter(nn.Module):
         self.hidden_dim = hidden_dim
         self.lora_rank = lora_rank
         self.num_heads = num_heads
+        self.mask_channels = mask_channels
         
         # Style branch: CLIP features (768) → hidden_dim + LoRA
         self.style_proj = nn.Linear(clip_dim, hidden_dim)
@@ -79,11 +85,16 @@ class ConditionInjectionAdapter(nn.Module):
             device='cpu'
         )
         
-        # Mask branch: VAE features → Conv2D → GlobalAvgPool → Linear + LoRA
+        # Mask branch: VAE/Fill features → Conv2D → GlobalAvgPool → Linear + LoRA
+        # Handles both standard VAE (4 channels) and Fill model (320 channels) conditioning
         # More memory-efficient approach using global average pooling
-        self.mask_conv = nn.Conv2d(4, 64, kernel_size=3, padding=1)
+        
+        # For Fill models with 320 channels, we use a larger intermediate representation
+        conv_out_channels = 128 if mask_channels > 100 else 64
+        
+        self.mask_conv = nn.Conv2d(mask_channels, conv_out_channels, kernel_size=3, padding=1)
         self.mask_pool = nn.AdaptiveAvgPool2d(1)  # Global average pooling
-        self.mask_proj = nn.Linear(64, hidden_dim)  # Much smaller projection
+        self.mask_proj = nn.Linear(conv_out_channels, hidden_dim)
         self.mask_lora = LinearLora(
             in_features=hidden_dim,
             out_features=hidden_dim,
